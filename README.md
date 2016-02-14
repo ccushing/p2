@@ -16,7 +16,7 @@ This project consists of a web form which allows a user to randomly generate pas
 
 ## Screen Cast for P2
 This video has been uploaded to YouTube. You should be able to view it in 1080p from the selector in the lower right hand corner.
-[Screencast URL](https://youtu.be/-Lq7yc39Rmk)
+[Screencast URL](https://youtu.be/VIvLQtbf5lM)
 
 
 ## Outside Code / Libraries used
