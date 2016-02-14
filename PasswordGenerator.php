@@ -1,62 +1,59 @@
 <?php
 
-# Get Form Values
+# Get Form Values (If not posted, then set default values)
 
- $MaxWords = $_POST["MaxWords"];
- $Case = $_POST["optionsCase"];
+if (isset($_POST['MaxWords']))
+{ $MaxWords = $_POST["MaxWords"];}
+else
+{ $MaxWords = 3;}
 
- $IncludeSymbol= false;
- $IncludeDash= false;
- $IncludeNumber= false;
+if (isset($_POST['optionsCase']))
+{ $Case = $_POST["optionsCase"];}
+else
+{ $Case = "Mixed";}
 
- if ( $_POST["IncludeSymbol"] = "on") {
- $IncludeSymbol = true;}
+if (isset($_POST['PasswordsToGenerate']))
+{ $PasswordsToGenerate = $_POST["PasswordsToGenerate"];}
+else
+{ $PasswordsToGenerate = 5;}
 
-  if ( $_POST["IncludeDash"] = "on") {
-  $IncludeDash = true;}
 
-  if ( $_POST["IncludeNumber"] = "on") {
-  $IncludeNumber = true;}
+ $IncludeSymbol= isset($_POST['IncludeSymbol']);
+ $IncludeDash= isset($_POST['IncludeDash']);
+ $IncludeNumber= isset($_POST['IncludeNumber']);
 
+ 
+echo "PasswordsToGenerate=".$PasswordsToGenerate."<br>";
+echo "MaxWordsIsInt=".is_numeric($MaxWords)."<br>";
+echo "MaxWords=".$MaxWords."<br>";
 
   
 # Validate Number of Words is between 3 and 9
-if ($MaxWords >= 3 AND $MaxWords <= 9)
-	$validForm = true;
-else
-	$validForm = false;
+$validForm = true;
+
+if ($MaxWords < 3 OR $MaxWords > 5 OR  is_numeric($MaxWords) == false)
+	{$validForm = false;}
 
 
-	if ($validForm = false)
-	{
+# Validate Number of Passwords to Generate is between 1 and 20
+if ($PasswordsToGenerate < 1 OR $PasswordsToGenerate > 20 OR is_numeric($PasswordsToGenerate)==false)
+	{$validForm = false;}
 
-	#exit();
-	}
+	echo "ValidForm=".$validForm;
 
-
-
-
-
+	
 # Return 5 Passwords
-# echo "MaxWords".$MaxWords;
-# echo "IncludeDash".$IncludeDash;
-# echo "IncludeSymbol".$IncludeSymbol;
-# echo "IncludeNumber".$IncludeNumber;
-# echo "IncludeCase".$Case;
-
+# echo "MaxWords=".$MaxWords."<br>";
+# echo "IncludeDash=".$IncludeDash."<br>";
+# echo "IncludeSymbol=".$IncludeSymbol."<br>";
+# echo "IncludeNumber=".$IncludeNumber."<br>";
+# echo "IncludeCase=".$Case."<br>";
+# var_dump($_POST);
 
 # echo generatePassword($MaxWords, $IncludeDash, $IncludeSymbol, $IncludeNumber,$Case);
 
-$password1 = generatePassword($MaxWords, $IncludeDash, $IncludeSymbol, $IncludeNumber,$Case);
-$password2 = generatePassword($MaxWords, $IncludeDash, $IncludeSymbol, $IncludeNumber,$Case);
-$password3 = generatePassword($MaxWords, $IncludeDash, $IncludeSymbol, $IncludeNumber,$Case);
-$password4 = generatePassword($MaxWords, $IncludeDash, $IncludeSymbol, $IncludeNumber,$Case);
-$password5 = generatePassword($MaxWords, $IncludeDash, $IncludeSymbol, $IncludeNumber,$Case);
-
-?>
 
 
-<?php
 
 function generatePassword($numberOfWords, $includeDashes, $includeSymbol, $includeNumber,$case) {
 
@@ -120,12 +117,12 @@ $symbols = str_split(".!@#$%^&*()/:;+=");
 for ($x = 1; $x <= $numberOfWords; $x++) {
      $word = $words[array_rand($words)];
 
-	 if ($case = "Mixed"){
-	 $password = $password.$word;}
-	 elseif ($case = "Lower"){
-	 $password = $password.strtolower($word);}
+	 if ($case == "Mixed"){
+		$password = $password.$word;}
+	 elseif ($case == "Lower"){
+		 $password = $password.strtolower($word);}
 
-	 if ($includeDashes = true){
+	 if ($includeDashes){
 	 $password = $password."-";}
 
 } 
@@ -134,10 +131,10 @@ for ($x = 1; $x <= $numberOfWords; $x++) {
 	$password = rtrim($password, "-");
 
 
-	 if ($includeSymbol = true){
+	 if ($includeSymbol){
 	  $password = $password.$symbols[array_rand($symbols)];}
 
-	 if ($includeNumber = true){
+	 if ($includeNumber){
 	  $password = $password.rand( 100 , 10000 );}
 
 

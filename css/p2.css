@@ -18,5 +18,5 @@
 
 
 .form-noerror {
-    visibility:hidden;
+    display:none;
 }

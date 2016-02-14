@@ -17,9 +17,7 @@
         <div class="row">
             <div class="col-md-4">
 
-                <div class="panel panel-primary">
-                    <p class="bg-danger">Error! - Select a number from 3 to 9. Only a lunatic would go outside of these bounds!</p>
-                  </div>
+
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -28,36 +26,32 @@
                     <div class="panel-body">
                         <form method="post" id="PasswordForm" >
                             <div class="form-group">
-                                <label for="MaxWords">Number of Words</label>
-
-                                <select class="form-control" name="MaxWords">
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                </select>
+                                <label for="MaxWords">Number of Words (Between 3 and 9)</label>
+								<input type="number" class="form-control" name="MaxWords" value="<?php echo $MaxWords; ?>">
 
                             </div>
+
+						<div class="panel <?php if( $validForm){echo "form-noerror";} ?>">
+                    <p class="bg-danger">Error! - Please verify the number of words is between 3 and 9 and the number of passwords to generate is between 1 and 20.</p>
+                  </div>
+
 
                             <div class="panel panel-default">
                                 <div class="checkbox">
                                     <label>
-                                        <input name="IncludeSymbol" type="checkbox">
+                                        <input name="IncludeSymbol" type="checkbox" <?php if ($IncludeSymbol){echo "checked";} ?> value="1">
                                         Include a Symbol
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input name="IncludeNumber" type="checkbox">
+                                        <input name="IncludeNumber" type="checkbox" <?php if ($IncludeNumber){echo "checked";} ?> value="1">
                                         Include a Number
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input name="IncludeDash" type="checkbox">
+                                        <input name="IncludeDash" type="checkbox" <?php if ($IncludeDash){echo "checked";} ?> value="1">
                                         Include Dashes
                                     </label>
                                 </div>
@@ -66,17 +60,39 @@
                             <div class="panel panel-default">
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="optionsCase" id="optionMixed" value="Mixed" checked>
+                                        <input type="radio" name="optionsCase" id="optionMixed" value="Mixed" <?php if ($Case == "Mixed"){echo "checked";} ?> >
                                         Use Mixed Case
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="optionsCase" id="optionLower" value="Lower">
+                                        <input type="radio" name="optionsCase" id="optionLower" value="Lower" <?php if ($Case == "Lower"){echo "checked";} ?>>
                                         Use Lower Case
                                     </label>
                                 </div>
                             </div>
+
+							                            <div class="form-group">
+                                <label for="PasswordsToGenerate">Number of Passwords to Generate</label>
+
+                                <select class="form-control" name="PasswordsToGenerate">
+
+												<?php
+												
+												 for($c = 1; $c <= 20; $c++) { 
+
+												 if($c == $PasswordsToGenerate)
+												 {echo "<option selected>".$c."</option>";}
+												 else
+												 {echo "<option>".$c."</option>";}
+
+												 }
+ 												 ?> 
+                                </select>
+
+                            </div>
+
+
 
                             <button type="submit" class="btn btn-default">Submit</button>
 
@@ -87,24 +103,16 @@
                      <div class="panel-body">
                     <table class="table table-bordered">
                 <thead><tr><th>Generated Passwords</th></tr></thead>
-                <tr>
-                    <td><?php echo $password1; ?></td>
-                </tr>
 
-                <tr>
-                    <td><?php echo $password2; ?></td>
-                </tr>
+				<?php
+				if ($validForm)
+				{
+				 for($c = 1; $c <= $PasswordsToGenerate; $c++) { 
 
-                <tr>
-                    <td><?php echo $password3; ?></td>
-                </tr>
-
-                <tr>
-                    <td><?php echo $password4; ?></td>
-                </tr>
-				                <tr>
-                    <td><?php echo $password5; ?></td>
-                </tr>
+				 echo "<tr><td>".generatePassword($MaxWords, $IncludeDash, $IncludeSymbol, $IncludeNumber,$Case)."</td></tr>";
+				 }
+				 }
+ 				 ?> 
             </table>
                          </div>
                 </div>
