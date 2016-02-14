@@ -8,7 +8,7 @@
     <link href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/flatly/bootstrap.min.css" rel="stylesheet">
     <link href='css/p2.css' rel='stylesheet'>
 
-    <?php
+ <?php
 require('PasswordGenerator.php');
 ?>
 

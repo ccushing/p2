@@ -30,7 +30,7 @@ $IncludeNumber = isset($_POST['IncludeNumber']);
 $validForm = true;
 
 # Number of Words is between 3 and 9
-if ($MaxWords < 3 OR $MaxWords > 5 OR is_numeric($MaxWords) == false) {
+if ($MaxWords < 3 OR $MaxWords > 9 OR is_numeric($MaxWords) == false) {
     $validForm = false;
 }
 
@@ -123,7 +123,7 @@ function generatePassword($numberOfWords, $includeDashes, $includeSymbol, $inclu
     
     # Truncate the last Dash
     $password = rtrim($password, "-");
-    
+
     # Add a symbol if symbols are specified
     if ($includeSymbol) {
         $password = $password . $symbols[array_rand($symbols)];
@@ -133,6 +133,8 @@ function generatePassword($numberOfWords, $includeDashes, $includeSymbol, $inclu
     if ($includeNumber) {
         $password = $password . rand(100, 10000);
     }
+
+
     
     return $password;
     
