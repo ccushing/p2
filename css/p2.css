@@ -1,0 +1,22 @@
+
+/*
+    p2.css
+    Stylesheet for the p2 web site.
+    */
+
+  .row {
+            padding-top: 30px;
+        }
+
+.checkbox,.radio {
+    padding-left: 25px;
+}
+
+.form-error {
+    visibility:visible;
+}
+
+
+.form-noerror {
+    visibility:hidden;
+}
